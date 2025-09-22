@@ -10,7 +10,7 @@ A mobile-first web application designed to help users discover stunning location
 
 *Action: Take a nice screenshot of your app, add it to your repo, and update the link below.*
 
-![Sri Lanka Travel Planner Screenshot](https://[your-image-url-here])
+<img width="1890" height="922" alt="image" src="https://github.com/user-attachments/assets/401db66b-34f2-4b9f-abfc-32e20ffcc9da" />
 
 ---
 
