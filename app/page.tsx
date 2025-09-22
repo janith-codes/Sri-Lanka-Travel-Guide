@@ -30,12 +30,12 @@ export default function Home() {
     const fetchLocations = async () => {
       try {
         const response = await fetch('/locations.json');
-        const data = await response.json();
+        const data: Location[] = await response.json();
         setLocations(data);
         setFilteredLocations(data);
         
         // Extract unique categories
-        const uniqueCategories = ['All', ...Array.from(new Set(data.map((location: Location) => location.category)))];
+        const uniqueCategories: string[] = ['All', ...Array.from(new Set(data.map((location: Location) => location.category)))];
         setCategories(uniqueCategories);
         
         setLoading(false);

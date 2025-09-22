@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { APIProvider, Map, Marker, Polyline, useMap } from '@vis.gl/react-google-maps';
+import { APIProvider, Map, Marker, useMap } from '@vis.gl/react-google-maps';
 
 export type TripLocation = {
   id: number;
@@ -26,6 +26,28 @@ function FitBounds({ locations }: { locations: TripLocation[] }) {
     locations.forEach((loc) => bounds.extend(loc.coordinates));
     map.fitBounds(bounds, 48);
   }, [map, locations]);
+
+  return null;
+}
+
+function RoutePolyline({ path }: { path: google.maps.LatLngLiteral[] }) {
+  const map = useMap(mapId);
+
+  useEffect(() => {
+    if (!map || !path || path.length < 2) return;
+
+    const polyline = new google.maps.Polyline({
+      path,
+      strokeColor: '#ea580c',
+      strokeOpacity: 1,
+      strokeWeight: 5,
+      map,
+    });
+
+    return () => {
+      polyline.setMap(null);
+    };
+  }, [map, path]);
 
   return null;
 }
@@ -62,9 +84,7 @@ export default function TripMap({ locations, path }: Props) {
           {locations.map((loc) => (
             <Marker key={loc.id} position={loc.coordinates} title={loc.name} />
           ))}
-          {path && path.length > 1 && (
-            <Polyline path={path} options={{ strokeColor: '#ea580c', strokeWeight: 5 }} />
-          )}
+          {path && path.length > 1 && <RoutePolyline path={path} />}
         </Map>
       </div>
     </APIProvider>
